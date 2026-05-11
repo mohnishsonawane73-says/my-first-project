@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mohanish | Dev Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Sora:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red: #e63946;
+      --gold: #f4a306;
+      --dark: #0a0a0f;
+      --surface: #11111a;
+      --card: #181825;
+      --border: rgba(244,163,6,0.2);
+      --text: #f0eaff;
+      --muted: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* BG grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(244,163,6,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,163,6,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .glow-orb {
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(230,57,70,0.12) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift { to { transform: translate(80px, 60px); } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .logo span { color: var(--red); }
+
+    nav ul {
+      list-style: none;
+      display: flex; gap: 2rem;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 6rem 8vw 4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(244,163,6,0.1);
+      border: 1px solid rgba(244,163,6,0.3);
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      line-height: 1.05;
+      letter-spacing: 2px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    h1 .highlight { color: var(--red); }
+    h1 .gold { color: var(--gold); }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-btns {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .btn {
+      padding: 0.7rem 1.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-primary:hover { background: #c1121f; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(244,163,6,0.4);
+    }
+
+    .btn-outline:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    /* SKILLS */
+    .section {
+      position: relative; z-index: 1;
+      padding: 5rem 8vw;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      transition: all 0.25s;
+      cursor: default;
+    }
+
+    .skill-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      background: rgba(244,163,6,0.05);
+    }
+
+    .skill-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    .skill-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+    }
+
+    .project-card:hover { transform: translateY(-6px); border-color: rgba(244,163,6,0.5); }
+
+    .project-tag {
+      display: inline-block;
+      background: rgba(230,57,70,0.1);
+      color: var(--red);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(230,57,70,0.25);
+      margin-bottom: 0.8rem;
+    }
+
+    .project-name {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .project-stack {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      background: rgba(244,163,6,0.08);
+      color: var(--gold);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(244,163,6,0.2);
+    }
+
+    /* CONTACT */
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      margin: 0.8rem 0 2rem;
+      line-height: 1.7;
+    }
+
+    footer {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer span { color: var(--red); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .hero { padding: 5rem 6vw 3rem; }
+      .section { padding: 3rem 6vw; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb"></div>
+
+  <nav>
+    <div class="logo">M<span>.</span>DEV</div>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">⚡ Available for opportunities</div>
+    <h1>
+      HEY, I'M<br>
+      <span class="highlight">MOHANISH</span><br>
+      <span class="gold">PATIL.</span>
+    </h1>
+    <p class="hero-sub">
+      Final-year Computer Engineering student · Building cool things with
+      HTML, CSS, Python & Java · Passionate about UI/UX & creative code.
+    </p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-outline" href="#contact">Contact Me</a>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <p class="section-label">What I know</p>
+    <h2 class="section-title">SKILLS</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-icon">🌐</div><div class="skill-name">HTML / CSS</div></div>
+      <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div></div>
+      <div class="skill-card"><div class="skill-icon">☕</div><div class="skill-name">Java</div></div>
+      <div class="skill-card"><div class="skill-icon">⚙️</div><div class="skill-name">8086 Assembly</div></div>
+      <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-name">Figma</div></div>
+      <div class="skill-card"><div class="skill-icon">🔥</div><div class="skill-name">Flask</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <p class="section-label">What I've built</p>
+    <h2 class="section-title">PROJECTS</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <span class="project-tag">ML · Web App</span>
+        <p class="project-name">TruthLens</p>
+        <p class="project-desc">Instagram Fake Profile Detection app using Random Forest classifier, Flask backend and RapidAPI for live profile scraping.</p>
+        <div class="project-stack">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">ML</span>
+          <span class="tag">RapidAPI</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-tag">Frontend</span>
+        <p class="project-name">AniVibe</p>
+        <p class="project-desc">Anime-themed affiliate marketing site with a Jujutsu Kaisen-inspired aesthetic, blood red & gold palette.</p>
+        <div class="project-stack">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-tag">UI/UX</span>
+        <p class="project-name">FitForge</p>
+        <p class="project-desc">Gamified fitness app concept with 10-screen UI, achievements system and RPG-style progression design in Figma.</p>
+        <div class="project-stack">
+          <span class="tag">Figma</span>
+          <span class="tag">UI Design</span>
+          <span class="tag">Prototyping</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <p class="section-label">Get in touch</p>
+    <h2 class="section-title" style="text-align:center;">CONTACT</h2>
+    <div class="contact-box">
+      <h3 style="font-family:'Black Han Sans',sans-serif;font-size:1.5rem;color:var(--gold);">LET'S CONNECT</h3>
+      <p>Currently open to internships, freelance projects, and collabs. Feel free to reach out!</p>
+      <a class="btn btn-primary" href="mailto:your@email.com">Say Hello 👋</a>
+    </div>
+  </section>
+
+  <footer>
+    Built with ❤️ by <span>Mohanish Patil</span> · Sandip Polytechnic, Nashik
+  </footer>
+
+</body>
+</html>
